@@ -3,8 +3,8 @@ spring:
     name: service-discovery-server
   jmx:
     default-domain: ${spring.application.name}
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
 
 server:
   port: 8101
