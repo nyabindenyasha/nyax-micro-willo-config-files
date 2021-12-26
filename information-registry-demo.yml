@@ -1,0 +1,123 @@
+api-gateway: https://api.demo.novapay.co.zw/api
+
+spring:
+  application:
+    name: information-registry
+  profiles:
+    active: demo
+  cloud:
+    config:
+      uri: https://config.novapay.co.zw
+  main:
+    allow-bean-definition-overriding: true
+
+  rabbitmq:
+    host: svr2.rabbitmq.novapay.co.zw
+    port: 5672
+    username: novapay-demo
+    password: "4+dAFm^STZ5#6yTUgeT7vkF^T7K_+uYu"
+    virtual-host: novapay-demo
+    requested-heartbeat: 10
+
+  datasource:
+    username: novapay
+    password: "-D:wp;_yW$HN-g.;)6T9F/}q#m&(v="
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/info_registry?autoReconnect=true&createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Harare
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+
+
+user-manager:
+  user:
+    username: novapay
+    password: "7i6[CLvkWQTnWv-DWv%S7E?2TLCX,b"
+
+
+  level:
+    io.github.hobbstech: trace
+
+user-manager-service:
+  url: ${api-gateway}/user-manager
+transactions-engine:
+  url: ${api-gateway}/transactions
+transactions-service:
+  url: ${transactions-engine.url}
+information-registry:
+  url: ${api-gateway}/registry
+file-storage-service:
+  url: ${api-gateway}/files
+authorization-engine:
+  url: ${api-gateway}/auth-engine
+
+security:
+  resources:
+    access-key-secret: "[T.L#Q_m!qa2)Qw?=padfh*mbS4y-R3vw$53zk6(WzLjb6-cc%U+h}q2T?NWM)&9},%%RP[(67!jJ3[p8-XNPBk!c+[@aG-uj+aW"
+
+server:
+  port: 8107
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    metadata-map:
+      startup: ${random.int}
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: https://${eureka-server.username}:${eureka-server.password}@discovery.demo.novapay.co.zw/eureka/
+eureka-server:
+  username: novapay
+  password: eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+system:
+  name: NovaPay
+  emails:
+    from-email: no-reply@novapay.co.zw
+    support-email: support-demo@novapay.co.zw
+  environment: Demontration
+
+company-requests:
+  creation:
+    receiving-email: info-demo@novapay.co.zw
+novapay:
+  customer-care:
+    receiving-email: support-demo@novapay.co.zw
+  support:
+    receiving-email: support-demo@novapay.co.zw
+
+  file-storage:
+    type: remote
+  encryption:
+    enabled: true
+  notifications:
+    in-app:
+      enabled: true
+    emails:
+      enabled: true
+  audit-trail:
+    enabled: true
+
+remote-file-storage:
+  server:
+    ip: files-storage.novapay.co.zw
+    port: 1202
+    user: demostration
+    password: -E_6twdhXi+zTuafygmKY7H8bh];p2
+  directory: novapay/files

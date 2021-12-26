@@ -1,0 +1,128 @@
+api-gateway: https://api.projectafrica.online/api
+
+spring:
+  application:
+    name: information-registry
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: https://config.projectafrica.online
+  main:
+    allow-bean-definition-overriding: true
+
+  rabbitmq:
+    host: dev.rabbitmq.novapay.co.zw
+    port: 5672
+    username: novapay-dev
+    password: "cbi5ZHLFmJD&8FZTU,nt,H}@yU/4#p"
+    virtual-host: novapay-dev
+    requested-heartbeat: 10
+
+  datasource:
+    username: projectafrica
+    password: "-D:wp;_yW$HN-g.;)6T9F/}q#m&(v="
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db.projectafrica.online:3306/info_registry?autoReconnect=true&createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Africa/Harare
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+
+
+user-manager:
+  user:
+    username: projectafrica
+    password: "7i6[CLvkWQTnWv-DWv%S7E?2TLCX,b"
+
+
+  level:
+    io.github.hobbstech: trace
+
+user-manager-service:
+  url: ${api-gateway}/user-manager
+transactions-engine:
+  url: ${api-gateway}/transactions
+transactions-service:
+  url: ${transactions-engine.url}
+information-registry:
+  url: ${api-gateway}/registry
+file-storage-service:
+  url: ${api-gateway}/files
+authorization-engine:
+  url: ${api-gateway}/auth-engine
+
+security:
+  resources:
+    access-key-secret: "[T.L#Q_m!qa2)Qw?=padfh*mbS4y-R3vw$53zk6(WzLjb6-cc%U+h}q2T?NWM)&9},%%RP[(67!jJ3[p8-XNPBk!c+[@aG-uj+aW"
+
+server:
+  port: 8107
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    metadata-map:
+      startup: ${random.int}
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: https://${eureka-server.username}:${eureka-server.password}@discovery.projectafrica.online/eureka/
+eureka-server:
+  username: projectafrica
+  password: projectafrica
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+system:
+  name: NovaPay
+  emails:
+    from-email: no-reply@novapay.co.zw
+    support-email: support-dev@novapay.co.zw
+  environment: Development 
+
+company-requests:
+  creation:
+    receiving-email: info-dev@novapay.co.zw
+novapay:
+  customer-care:
+    receiving-email: support-dev@novapay.co.zw
+  support:
+    receiving-email: support-dev@novapay.co.zw
+
+
+  file-storage:
+    type: remote
+  encryption:
+    enabled: true
+  notifications:
+    in-app:
+      enabled: true
+    emails:
+      enabled: true
+  audit-trail:
+    enabled: true
+
+remote-file-storage:
+  server:
+    ip: files-storage.novapay.co.zw
+    port: 1202
+    user: development
+    password: ZPE#B-?n8y+Kvq4BP5*%2v/&Q+MRmj
+  directory: novapay/files
+
+file:
+  uploadDir: ./transaction-files
+  fileTypes: csv,txt,csv4

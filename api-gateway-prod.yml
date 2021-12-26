@@ -1,0 +1,79 @@
+server:
+  port: 8102
+
+zuul:
+  routes:
+    user-manager-service: /user-manager/**
+    notifications-service: /notifications/**
+    information-registry: /registry/**
+    authorization-engine: /auth-engine/**
+    transactions-engine: /transactions/**
+    file-storage-service: /files/**
+    eschedules-engine: /eschedules/**
+    reports: /reports/**
+    cbz-tunnel: /cbz/**
+    cabs-tunnel: /cabs/**
+    audit-trail: /audit/**
+    nedbank-tunnel: /nedbank/**
+    interbank-switching: /interbank-switching/**
+    fbc-tunnel: /fbc/**
+
+
+  ignored-headers: "*"
+  ribbon:
+    eager-load:
+      enabled: true
+  ignored-services: "*"
+  prefix: /api
+  host:
+    connect-timeout-millis: 600000
+    socket-timeout-millis: 600000
+    connection-request-timeout-millis: 600000
+  sensitive-headers: Cookie,Set-Cookie
+  ribbon-isolation-strategy: thread
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    metadata-map:
+      startup: ${random.int}
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registryFetchIntervalSeconds: 5
+    service-url:
+      defaultZone: https://${eureka-server.username}:${eureka-server.password}@discovery.novapay.co.zw/eureka/
+eureka-server:
+  username: novapay
+  password: eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 200MB
+  #      location: /var/app/current/tmp-tomcat
+  jmx:
+    default-domain: api-gateway
+  application:
+    name: api-gateway
+  http:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 200MB
+
+
+ribbon:
+  ReadTimeout: 6000000
+
