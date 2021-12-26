@@ -1,22 +1,12 @@
 server:
   port: 8102
 
+host: localhost
+
 zuul:
   routes:
     user-manager-service: /user-manager/**
-    notifications-service: /notifications/**
     information-registry: /registry/**
-    interbank-switching: /interbank-switching/**
-    authorization-engine: /auth-engine/**
-    transactions-engine: /transactions/**
-    file-storage-service: /files/**
-    eschedules-engine: /eschedules/**
-    reports: /reports/**
-    cbz-tunnel: /cbz/**
-    cabs-tunnel: /cabs/**
-    audit-trail: /audit/**
-    nedbank-tunnel: /nedbank/**
-    fbc-tunnel: /fbc/**
   ignored-headers: "*"
   ribbon:
     eager-load:
@@ -42,10 +32,8 @@ eureka:
     fetch-registry: true
     registryFetchIntervalSeconds: 5
     service-url:
-      defaultZone: https://${eureka-server.username}:${eureka-server.password}@discovery.projectafrica.online/eureka/
-eureka-server:
-  username: projectafrica
-  password: projectafrica
+      defaultZone: http://${host}:${server.port}/eureka/
+
 management:
   endpoints:
     web:
