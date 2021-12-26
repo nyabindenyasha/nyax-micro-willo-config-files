@@ -34,8 +34,6 @@ management:
 spring:
   application:
     name: user-manager-service
-  profiles:
-    active: dev
   datasource:
     username: projectafrica
     password: "-D:wp;_yW$HN-g.;)6T9F/}q#m&(v="
