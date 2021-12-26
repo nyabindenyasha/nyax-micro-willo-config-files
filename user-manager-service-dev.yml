@@ -1,9 +1,15 @@
-api-gateway: https://api.projectafrica.online/api
-
 server:
   port: 8106
 
+gateway:
+  port: 8102
+
+host: localhost
+
+api-gateway: http://${host}:${gateway.port}/api
+
 eureka:
+  port: 8101
   instance:
     leaseRenewalIntervalInSeconds: 10
     health-check-url-path: /actuator/health
@@ -14,10 +20,8 @@ eureka:
     register-with-eureka: true
     fetch-registry: false
     service-url:
-      defaultZone: https://${eureka-server.username}:${eureka-server.password}@discovery.projectafrica.online/eureka/
-eureka-server:
-  username: projectafrica
-  password: projectafrica
+      defaultZone: http://${host}:${eureka.port}/eureka/
+
 management:
   endpoints:
     web:
@@ -26,7 +30,6 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-
 
 spring:
   application:
@@ -66,8 +69,6 @@ system:
 accounts:
   verification:
     url-path: /#/auth/verify-account
-
-
 
   level:
     io.github.hobbstech: trace
