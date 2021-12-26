@@ -21,6 +21,7 @@ zuul:
   ribbon-isolation-strategy: thread
 
 eureka:
+  port: 8101
   instance:
     leaseRenewalIntervalInSeconds: 10
     health-check-url-path: /actuator/health
@@ -32,7 +33,7 @@ eureka:
     fetch-registry: true
     registryFetchIntervalSeconds: 5
     service-url:
-      defaultZone: http://${host}:${server.port}/eureka/
+      defaultZone: http://${host}:${eureka.port}/eureka/
 
 management:
   endpoints:
