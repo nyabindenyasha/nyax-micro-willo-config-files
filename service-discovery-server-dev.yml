@@ -5,16 +5,11 @@ spring:
     default-domain: ${spring.application.name}
   profiles:
     active: dev
-  security:
-    user:
-      name: projectafrica
-      password: projectafrica
-
 
 server:
   port: 8101
 
-host: discovery.projectafrica.online
+host: localhost
 
 eureka:
   instance:
@@ -26,7 +21,7 @@ eureka:
     fetch-registry: false
     registryFetchIntervalSeconds: 5
     service-url:
-      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8101/eureka/
+      defaultZone: http://${host}:${server.port}/eureka/
 
   server:
     waitTimeInMsWhenSyncEmpty: 0
