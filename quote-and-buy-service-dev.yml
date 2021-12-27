@@ -1,0 +1,71 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: Password@123
+    platform: postgres
+    testWhileIdle: true
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+
+  cloud:
+    config:
+      allow-override: true
+      override-system-properties: false
+
+server:
+  port: 8105
+
+gateway:
+  port: 8102
+
+host: localhost
+
+api-gateway: http://${host}:${gateway.port}/api
+
+#baseUrl: http://localhost:8102/api/users
+
+time-zone: UTC
+
+eureka:
+  port: 8101
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    metadata-map:
+      startup: ${random.int}
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registryFetchIntervalSeconds: 5
+    service-url:
+      defaultZone: http://${host}:${eureka.port}/eureka/
+
+ribbon:
+  ReadTimeout: 6000000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+# logging:
+#   level:
+#     root: warn
+#     zw:
+#       co:
+#         afrosoft: info
+
