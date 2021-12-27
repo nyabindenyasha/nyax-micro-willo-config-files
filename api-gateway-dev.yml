@@ -7,6 +7,8 @@ zuul:
   routes:
     user-manager-service: /user-manager/**
     information-registry: /registry/**
+    user-service: /users/**
+    department-service: /department/**
   ignored-headers: "*"
   ribbon:
     eager-load:
