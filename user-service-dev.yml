@@ -58,6 +58,11 @@ management:
     health:
       show-details: always
 
+logging:
+  file:
+    path: logs/
+    name: user-service.log
+
 # logging:
 #   level:
 #     root: warn

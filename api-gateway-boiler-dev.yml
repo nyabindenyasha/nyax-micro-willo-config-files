@@ -70,3 +70,8 @@ hystrix:
 ribbon:
   ReadTimeout: 10000
   SocketTimeout: 10000
+
+logging:
+  file:
+    path: logs/
+    name: api-gateway-boiler.log
