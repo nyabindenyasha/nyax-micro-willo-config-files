@@ -35,4 +35,7 @@ management:
     health:
       show-details: ALWAYS
 
-
+logging:
+  file:
+    path: logs/
+    name: service-discovery-server.log
